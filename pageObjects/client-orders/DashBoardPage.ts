@@ -19,10 +19,7 @@ export class DashBoardPage {
 
     async searchProductAddCart(productName: string) {
         await this.productsText.first().waitFor({ state: 'visible' });
-        const titles = await this.productsText.allTextContents();
-        console.log(titles);
         const count = await this.products.count();
-        console.log(count);
         for (let i = 0; i < count; ++i) {
             if (await this.products.nth(i).locator("b").textContent() === productName) {
                 //add to cart

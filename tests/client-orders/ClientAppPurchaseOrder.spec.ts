@@ -13,8 +13,8 @@ for (const data of dataset) {
 
         const loginPage = poManager.getLoginPage();
 
-        loginPage.goTo();
-        loginPage.validLogin(data.username, data.password);
+        await loginPage.goTo();
+        await loginPage.validLogin(data.username, data.password);
 
         const dashBoardPage = poManager.getDashboardPage();
         await dashBoardPage.searchProductAddCart(data.productName);
@@ -28,7 +28,6 @@ for (const data of dataset) {
         await ordersReviewPage.searchCountryAndSelect("ind", "India");
         let orderId: any;
         orderId = await ordersReviewPage.SubmitAndGetOrderId();
-        console.log(orderId);
 
         await dashBoardPage.navigateToOrders();
 
@@ -48,8 +47,8 @@ for (const data of placeOrderTestData) {
 
         const loginPage = poManager.getLoginPage();
 
-        loginPage.goTo();
-        loginPage.validLogin(data.username, data.password);
+        await loginPage.goTo();
+        await loginPage.validLogin(data.username, data.password);
 
         const dashBoardPage = poManager.getDashboardPage();
         await dashBoardPage.searchProductAddCart(data.productName);
@@ -63,7 +62,6 @@ for (const data of placeOrderTestData) {
         await ordersReviewPage.searchCountryAndSelect("ind", "India");
         let orderId: any;
         orderId = await ordersReviewPage.SubmitAndGetOrderId();
-        console.log(orderId);
 
         await dashBoardPage.navigateToOrders();
 

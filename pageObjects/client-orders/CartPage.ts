@@ -22,7 +22,7 @@ export class CartPage {
 
     async VerifyProductIsDisplayed(productName: string) {
 
-        await this.cartProducts.waitFor();
+        await this.cartProducts.waitFor({state: "visible"});
         const bool = await this.getProductLocator(productName).isVisible();
         expect(bool).toBeTruthy();
 

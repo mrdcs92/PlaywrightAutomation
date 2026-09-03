@@ -11,10 +11,9 @@ for (const data of dataset) {
         const poManager = new POManager(page);
 
         const loginPage = poManager.getLoginPage();
-        loginPage.goTo();
-        loginPage.validLogin(data.username, "banana");
+        await loginPage.goTo();
+        await loginPage.validLogin(data.username, "banana");
         const errorMessage = await loginPage.getErrorMessage();
-        console.log(errorMessage);
         expect(errorMessage).toEqual("Incorrect email or password.");
     });
 
@@ -23,10 +22,9 @@ for (const data of dataset) {
         const poManager = new POManager(page);
 
         const loginPage = poManager.getLoginPage();
-        loginPage.goTo();
-        loginPage.validLogin((data.username + ".com"), data.password);
+        await loginPage.goTo();
+        await loginPage.validLogin((data.username + ".com"), data.password);
         const errorMessage = await loginPage.getErrorMessage();
-        console.log(errorMessage);
         expect(errorMessage).toEqual("Incorrect email or password.");
     });
 
@@ -39,10 +37,9 @@ for (const data of placeOrderTestData) {
         const poManager = new POManager(page);
 
         const loginPage = poManager.getLoginPage();
-        loginPage.goTo();
-        loginPage.validLogin(data.username, "banana");
+        await loginPage.goTo();
+        await loginPage.validLogin(data.username, "banana");
         const errorMessage = await loginPage.getErrorMessage();
-        console.log(errorMessage);
         expect(errorMessage).toEqual("Incorrect email or password.");
     });
 
@@ -51,10 +48,9 @@ for (const data of placeOrderTestData) {
         const poManager = new POManager(page);
 
         const loginPage = poManager.getLoginPage();
-        loginPage.goTo();
-        loginPage.validLogin((data.username + ".com"), data.password);
+        await loginPage.goTo();
+        await loginPage.validLogin((data.username + ".com"), data.password);
         const errorMessage = await loginPage.getErrorMessage();
-        console.log(errorMessage);
         expect(errorMessage).toEqual("Incorrect email or password.");
     });
 
