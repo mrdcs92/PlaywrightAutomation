@@ -8,6 +8,8 @@ export class EventBookPage {
     confirmBtn: Locator;
     myBookings: Locator;
     ticketCount: Locator;
+    bookingRef: Locator;
+    bookingRefText: string;
 
     constructor(page: Page) {
         this.page = page;
@@ -17,6 +19,8 @@ export class EventBookPage {
         this.confirmBtn = page.locator(".confirm-booking-btn");
         this.myBookings = page.getByRole('button', { name: 'View My Bookings' });
         this.ticketCount = page.getByRole("button", {name: "+"});
+        this.bookingRef = page.locator(".booking-ref");
+        this.bookingRefText = "";
     }
 
     async fillForm(email: string, clickCount?: number) {
@@ -40,7 +44,12 @@ export class EventBookPage {
     }
 
     async goToMyBookings() {
+        this.bookingRefText = (await this.bookingRef.textContent()) ?? "";
         await this.myBookings.click();
+    }
+    
+    getBookingRef() {
+        return this.bookingRefText;
     }
 
 

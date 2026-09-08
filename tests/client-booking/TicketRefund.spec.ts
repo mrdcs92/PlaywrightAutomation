@@ -1,73 +1,85 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, request } from '@playwright/test';
 import { POManager } from "../../pageObjects/client-booking/POManager";
-import { placeOrderTestData } from '../../test-data/placeOrderTestData'
+import { placeOrderTestData } from '../../test-data/placeOrderTestData';
+import { ApiUtils } from '../../helpers/ApiUtils';
 
 for (const data of placeOrderTestData) {
-    test(`Ticket Refund Test - ${data.username}`, async ({ page }) => {
 
-        const poManager = new POManager(page);
 
-        const loginPage = poManager.getLoginPage();
-        await loginPage.goTo();
-        await loginPage.validLogin(data.username, data.password);
-        expect(await loginPage.browseEventsIsDisplayed()).toBeTruthy();
+    test.describe(`Booking Tests - ${data.username}`, () => {
 
-        const homePage = poManager.getHomePage();
-        await homePage.goToEvent();
+        test.beforeEach(async ({}) => {
+            const apiContext = await request.newContext();
+            const apiUtils = new ApiUtils(apiContext, data.username, data.password);
+            expect(await apiUtils.clearBookings()).toBeTruthy();      
+        });
 
-        const eventBookPage = poManager.getEventBookPage();
-        await eventBookPage.fillForm(data.username);
-        await eventBookPage.goToMyBookings();
+        test(`Ticket Refund Test`, async ({ page }) => {
 
-        const myBookingsPage = poManager.getMyBookingsPage();
-        await expect(page).toHaveURL(myBookingsPage.getPageUrl());
-        await myBookingsPage.viewEventDetails();
+            const poManager = new POManager(page);
 
-        const eventDetailPage = poManager.getEventDetailPage();
-        await expect(eventDetailPage.getBookingInfoText()).toBeVisible();
+            const loginPage = poManager.getLoginPage();
+            await loginPage.goTo();
+            await loginPage.validLogin(data.username, data.password);
+            expect(await loginPage.browseEventsIsDisplayed()).toBeTruthy();
 
-        expect(await eventDetailPage.getBookingIdLetter()).toBe(await eventDetailPage.getEventNameLetter());
+            const homePage = poManager.getHomePage();
+            await homePage.goToEvent();
 
-        await eventDetailPage.getRefundCheck();
+            const eventBookPage = poManager.getEventBookPage();
+            await eventBookPage.fillForm(data.username);
+            await eventBookPage.goToMyBookings();
 
-        await expect(eventDetailPage.getRefundSpinner()).toBeVisible();
-        await expect(eventDetailPage.getRefundSpinner()).not.toBeVisible({ timeout: 10000 });
+            const myBookingsPage = poManager.getMyBookingsPage();
+            await expect(page).toHaveURL(myBookingsPage.getPageUrl());
+            await myBookingsPage.viewEventDetails(eventBookPage.getBookingRef());
 
-        expect(await eventDetailPage.getRefundText()).toContain("Single-ticket bookings qualify for a full refund");
-    });
+            const eventDetailPage = poManager.getEventDetailPage();
+            await expect(eventDetailPage.getBookingInfoText()).toBeVisible();
 
-    test(`Ticket Not Eligible for Refund Test - ${data.username}`, async ({ page }) => {
+            expect(await eventDetailPage.getBookingIdLetter()).toBe(await eventDetailPage.getEventNameLetter());
 
-        const poManager = new POManager(page);
+            await eventDetailPage.getRefundCheck();
 
-        const loginPage = poManager.getLoginPage();
-        await loginPage.goTo();
-        await loginPage.validLogin(data.username, data.password);
-        expect(await loginPage.browseEventsIsDisplayed()).toBeTruthy();
+            await expect(eventDetailPage.getRefundSpinner()).toBeVisible();
+            await expect(eventDetailPage.getRefundSpinner()).not.toBeVisible({ timeout: 10000 });
 
-        const homePage = poManager.getHomePage();
-        await homePage.goToEvent();
+            expect(await eventDetailPage.getRefundText()).toContain("Single-ticket bookings qualify for a full refund");
+        });
 
-        const eventBookPage = poManager.getEventBookPage();
-        await eventBookPage.fillForm(data.username, 2);
-        await eventBookPage.goToMyBookings();
 
-        const myBookingsPage = poManager.getMyBookingsPage();
-        await expect(page).toHaveURL(myBookingsPage.getPageUrl());
-        await myBookingsPage.viewEventDetails();
+        test(`Ticket Not Eligible for Refund Test`, async ({ page }) => {
 
-        const eventDetailPage = poManager.getEventDetailPage();
-        await expect(eventDetailPage.getBookingInfoText()).toBeVisible();
+            const poManager = new POManager(page);
 
-        expect(await eventDetailPage.getBookingIdLetter()).toBe(await eventDetailPage.getEventNameLetter());
+            const loginPage = poManager.getLoginPage();
+            await loginPage.goTo();
+            await loginPage.validLogin(data.username, data.password);
+            expect(await loginPage.browseEventsIsDisplayed()).toBeTruthy();
 
-        await eventDetailPage.getRefundCheck();
+            const homePage = poManager.getHomePage();
+            await homePage.goToEvent();
 
-        await expect(eventDetailPage.getRefundSpinner()).toBeVisible();
-        await expect(eventDetailPage.getRefundSpinner()).not.toBeVisible({ timeout: 10000 });
+            const eventBookPage = poManager.getEventBookPage();
+            await eventBookPage.fillForm(data.username, 2);
+            await eventBookPage.goToMyBookings();
 
-        expect(await eventDetailPage.getRefundText()).toContain("Group bookings (3 tickets) are non-refundable");
+            const myBookingsPage = poManager.getMyBookingsPage();
+            await expect(page).toHaveURL(myBookingsPage.getPageUrl());
+            await myBookingsPage.viewEventDetails(eventBookPage.getBookingRef());
 
+            const eventDetailPage = poManager.getEventDetailPage();
+            await expect(eventDetailPage.getBookingInfoText()).toBeVisible();
+
+            expect(await eventDetailPage.getBookingIdLetter()).toBe(await eventDetailPage.getEventNameLetter());
+
+            await eventDetailPage.getRefundCheck();
+
+            await expect(eventDetailPage.getRefundSpinner()).toBeVisible();
+            await expect(eventDetailPage.getRefundSpinner()).not.toBeVisible({ timeout: 10000 });
+
+            expect(await eventDetailPage.getRefundText()).toContain("Group bookings (3 tickets) are non-refundable");
+        });
 
     });
 
