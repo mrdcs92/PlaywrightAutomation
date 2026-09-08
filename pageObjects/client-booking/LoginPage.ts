@@ -19,7 +19,9 @@ export class LoginPage {
     }
 
     async goTo() {
-        await this.page.goto("https://eventhub.rahulshettyacademy.com");
+        await this.page.goto("https://eventhub.rahulshettyacademy.com", {
+            waitUntil: "domcontentloaded"
+        });
     }
 
     async validLogin(username: string, password: string) {
