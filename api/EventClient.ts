@@ -8,7 +8,7 @@ export class EventClient {
         this.request = request;
     }
 
-    async createEvent(title: string, description: string, category: string, venue: string, city: string, eventDate: Date, price: number, totalSeats: number, token: string, imageUrl?: string) {
+    async createEvent(title: string, description: string, category: string, venue: string, city: string, eventDate: string, price: number, totalSeats: number, token: string, imageUrl?: string) {
 
         const eventPayLoad = {
             "title": title,

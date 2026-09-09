@@ -1,0 +1,46 @@
+import { test, expect, request } from '@playwright/test';
+import { APIManager } from "../../api/APIManager";
+import { eventTestData } from "../../test-data/eventTestData";
+
+for (const data of eventTestData) {
+
+    test.describe(`Event Creation Tests - ${data.title}`, () => {
+
+        test(`Successful Event Setup/Teardown`, async ({ request }) => {
+            const apiManager = new APIManager(request);
+            const loginClient = apiManager.getLoginClient();
+            const token = await loginClient.getAuthToken(data.username, data.password);
+
+            const eventClient = apiManager.getEventClient();
+
+            const eventResponse = await eventClient.createEvent(data.title, data.description, data.category, data.venue, data.city, data.eventDate, data.price, data.totalSeats, token);
+
+            expect(eventResponse.status()).toBe(201);
+
+            const resBody = await eventResponse.json();
+            expect(resBody.message).toBe("Event created successfully");
+
+            const eventId = resBody.data.id;
+
+            const deleteResponse = await eventClient.deleteEvent(eventId, token);
+            expect(deleteResponse.status()).toBe(200);
+
+            const delBody = await deleteResponse.json();
+            expect(delBody.message).toBe("Event deleted successfully");
+        })
+
+        test('Event Validation Error', async ({ request }) => {
+            const apiManager = new APIManager(request);
+            const eventClient = apiManager.getEventClient();
+
+            const eventResponse = await eventClient.createEvent(data.title, data.description, data.category, data.venue, data.city, data.eventDate, data.price, data.totalSeats, "blah");
+
+            expect(eventResponse.status()).toBe(401);
+            const resBody = await eventResponse.json();
+            expect(resBody.error).toBe("Invalid or expired token");
+        })
+
+    })
+}
+
+
