@@ -48,4 +48,14 @@ export class BookingClient {
         })
     }
 
+        async deleteAllBookings(token: string) {
+        
+        return await this.request.delete(`https://api.eventhub.rahulshettyacademy.com/api/bookings/`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
+            }
+        })
+    }
+
 }
