@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { APIManager } from "../../api/APIManager";
 import { bookingTestData } from "../../test-data/bookingTestData";
 import { DatabaseUtils } from '../../utils/DatabaseUtils';
-import mysql, { RowDataPacket } from 'mysql2/promise';
+import { RowDataPacket } from 'mysql2/promise';
 
 
 interface EventRecord extends RowDataPacket {
