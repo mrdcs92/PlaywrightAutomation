@@ -4,7 +4,7 @@ import { placeOrderTestData } from '../../test-data/placeOrderTestData';
 
 for (const data of placeOrderTestData) {
 
-    test.describe(`Login Validation Tests - ${data.username}`, () => {
+    test.describe(`Login Validation Tests - ${data.username}`, {tag:['@api', '@regression']}, () => {
 
         test('Positive Login Test', async ({ request }) => {
             const apiManager = new APIManager(request);
@@ -15,7 +15,7 @@ for (const data of placeOrderTestData) {
             expect(loginResponse.status()).toBe(200);
         })
 
-        test('Invalid Credentials Test', async ({ request }) => {
+        test('Invalid Credentials Test', {tag:['@errorValidation']}, async ({ request }) => {
             const apiManager = new APIManager(request);
 
             const loginClient = apiManager.getLoginClient();
@@ -31,7 +31,7 @@ for (const data of placeOrderTestData) {
 
 }
 
-test('Empty Credentials Test', async ({ request }) => {
+test('Empty Credentials Test', {tag:['@errorValidation']}, async ({ request }) => {
     const apiManager = new APIManager(request);
 
     const loginClient = apiManager.getLoginClient();

@@ -14,8 +14,8 @@ type EventData = {
 
 export const eventTestData: EventData[] = [
     {
-        "username": "misterdcs92@gmail.com",
-        "password": "1999222dst!taN1999222",
+        "username": "dylanplaywright1@gmail.com",
+        "password": "Dylanplaywright1!",
         "title": "Burger Summit 2027",
         "description": "A prestigious event bringing burger enjoyers together.",
         "category": "Festival",
@@ -27,8 +27,8 @@ export const eventTestData: EventData[] = [
         "imageUrl": ""
     },
     {
-        "username": "misterdcs1992@gmail.com",
-        "password": "1999222dst!taN1999222",
+        "username": "dylanplaywright2@gmail.com",
+        "password": "Dylanplaywright2!",
         "title": "Hotdog Bananza 2027",
         "description": "A fierce hotdog-eating competition.",
         "category": "Sports",

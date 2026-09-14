@@ -10,18 +10,18 @@ type BookingData = {
 
 export const bookingTestData: BookingData[] = [
     {
-        "username": "misterdcs92@gmail.com",
-        "password": "1999222dst!taN1999222", 
-        "eventId": 1,
+        "username": "dylanplaywright1@gmail.com",
+        "password": "Dylanplaywright1!", 
+        "eventId": 285,
         "customerName": "Bob Bobbert",
         "customerEmail": "bob1@gmail.com",
         "customerPhone": "1234567890",
         "quantity": 2
     },
     {
-        "username": "misterdcs1992@gmail.com",
-        "password": "1999222dst!taN1999222",
-        "eventId": 2,
+        "username": "dylanplaywright2@gmail.com",
+        "password": "Dylanplaywright2!",
+        "eventId": 283,
         "customerName": "Bill Bibbity",
         "customerEmail": "bill2@gmail.com",
         "customerPhone": "1234567890",

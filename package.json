@@ -7,6 +7,11 @@
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
+    "test:regression": "playwright test --grep @regression",
+    "test:api": "playwright test --grep @api",
+    "test:clientBooking": "playwright test --grep @clientBooking",
+    "test:clientOrder": "playwright test --grep @clientOrder",
+    "test:errorValidation": "playwright test --grep @errorValidation",
     "report": "playwright show-report"
   },
   "keywords": [

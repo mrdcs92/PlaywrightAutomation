@@ -7,7 +7,7 @@ import dataset from '../../test-data/placeOrderTestData.json';
 
 for (const data of dataset) {
 
-    test(`JSON Data: Place Order - ${data.productName}`, async ({ page }) => {
+    test(`JSON Data: Place Order - ${data.productName}`, {tag:['@clientOrder', '@regression']}, async ({ page }) => {
 
         const poManager = new POManager(page);
 
@@ -41,7 +41,7 @@ for (const data of dataset) {
 
 for (const data of placeOrderTestData) {
 
-    test(`TS Data: Place Order - ${data.productName}`, async ({ page }) => {
+    test(`TS Data: Place Order - ${data.productName}`, {tag:['@clientOrder', '@regression']}, async ({ page }) => {
 
         const poManager = new POManager(page);
 

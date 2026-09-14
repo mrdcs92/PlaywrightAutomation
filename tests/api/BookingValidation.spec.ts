@@ -4,7 +4,7 @@ import { bookingTestData } from "../../test-data/bookingTestData";
 
 for (const data of bookingTestData) {
 
-    test.describe(`Booking Creation Tests - ${data.customerName}`, () => {
+    test.describe(`Booking Creation Tests - ${data.customerName}`, {tag:['@api', '@regression']}, () => {
 
         test.beforeAll(async ({ }) => {
             const apiContext = await request.newContext();
@@ -30,7 +30,7 @@ for (const data of bookingTestData) {
             expect(bookBody.message).toBe("Booking confirmed!");
         })
 
-        test('Invalid Booking Test', async ({ request }) => {
+        test('Invalid Booking Test', {tag:['@errorValidation']}, async ({ request }) => {
             const apiManager = new APIManager(request);
             const loginClient = apiManager.getLoginClient();
             const token = await loginClient.getAuthToken(data.username, data.password);

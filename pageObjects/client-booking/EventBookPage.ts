@@ -44,7 +44,9 @@ export class EventBookPage {
     }
 
     async goToMyBookings() {
+        // set booking reference from newly created booking
         this.bookingRefText = (await this.bookingRef.textContent()) ?? "";
+        
         await this.myBookings.click();
     }
     

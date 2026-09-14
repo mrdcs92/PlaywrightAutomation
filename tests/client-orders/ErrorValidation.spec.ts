@@ -6,7 +6,7 @@ import dataset from '../../test-data/placeOrderTestData.json';
 
 for (const data of dataset) {
 
-    test(`JSON Data: Password Login Error Validation - ${data.username}`, async ({ page }) => {
+    test(`JSON Data: Password Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ page }) => {
 
         const poManager = new POManager(page);
 
@@ -17,7 +17,7 @@ for (const data of dataset) {
         expect(errorMessage).toEqual("Incorrect email or password.");
     });
 
-    test(`JSON Data: Username Login Error Validation - ${data.username}`, async ({ page }) => {
+    test(`JSON Data: Username Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ page }) => {
 
         const poManager = new POManager(page);
 
@@ -32,7 +32,7 @@ for (const data of dataset) {
 
 for (const data of placeOrderTestData) {
 
-    test(`TS Data: Password Login Error Validation - ${data.username}`, async ({ page }) => {
+    test(`TS Data: Password Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ page }) => {
 
         const poManager = new POManager(page);
 
@@ -43,7 +43,7 @@ for (const data of placeOrderTestData) {
         expect(errorMessage).toEqual("Incorrect email or password.");
     });
 
-    test(`TS Data: Username Login Error Validation - ${data.username}`, async ({ page }) => {
+    test(`TS Data: Username Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ page }) => {
 
         const poManager = new POManager(page);
 

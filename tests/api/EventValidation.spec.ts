@@ -4,7 +4,7 @@ import { eventTestData } from "../../test-data/eventTestData";
 
 for (const data of eventTestData) {
 
-    test.describe(`Event Creation Tests - ${data.title}`, () => {
+    test.describe(`Event Creation Tests - ${data.title}`, {tag:['@api', '@regression']}, () => {
 
         test(`Successful Event Setup/Teardown`, async ({ request }) => {
             const apiManager = new APIManager(request);
@@ -29,7 +29,7 @@ for (const data of eventTestData) {
             expect(delBody.message).toBe("Event deleted successfully");
         })
 
-        test('Event Validation Error', async ({ request }) => {
+        test('Event Validation Error', {tag:['@errorValidation']}, async ({ request }) => {
             const apiManager = new APIManager(request);
             const eventClient = apiManager.getEventClient();
 

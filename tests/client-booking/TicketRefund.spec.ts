@@ -6,7 +6,7 @@ import { ApiUtils } from '../../helpers/ApiUtils';
 for (const data of placeOrderTestData) {
 
 
-    test.describe(`Booking Tests - ${data.username}`, () => {
+    test.describe(`Booking Tests - ${data.username}`, {tag:['@clientBooking', '@regression']}, () => {
 
         test.beforeEach(async ({}) => {
             const apiContext = await request.newContext();
@@ -48,7 +48,7 @@ for (const data of placeOrderTestData) {
         });
 
 
-        test(`Ticket Not Eligible for Refund Test`, async ({ page }) => {
+        test(`Ticket Not Eligible for Refund Test`, {tag:['@errorValidation']}, async ({ page }) => {
 
             const poManager = new POManager(page);
 
