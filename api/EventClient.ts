@@ -51,4 +51,14 @@ export class EventClient {
             }
         })
     }
+
+        async getAllEvents(token: string) {
+
+        return await this.request.get(`https://api.eventhub.rahulshettyacademy.com/api/events/`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json',
+            }
+        })
+    }
 }

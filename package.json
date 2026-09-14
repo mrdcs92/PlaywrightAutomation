@@ -5,21 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
-
     "test:regression": "playwright test --grep @regression",
     "test:smoke": "playwright test --grep @smoke",
     "test:api": "playwright test --grep @api",
     "test:clientBooking": "playwright test --grep @clientBooking",
     "test:clientOrder": "playwright test --grep @clientOrder",
+    "test:database": "playwright test --grep @database",
     "test:errorValidation": "playwright test --grep @errorValidation",
-
     "test:regression:chromium": "playwright test --grep @regression --project=chromium",
     "test:regression:firefox": "playwright test --grep @regression --project=firefox",
     "test:regression:webkit": "playwright test --grep @regression --project=webkit",
-
     "report": "playwright show-report"
   },
   "keywords": [
@@ -34,6 +31,10 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.62.1",
-    "@types/node": "^26.4.0"
+    "@types/node": "^26.5.1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "mysql2": "^3.24.4"
   }
 }
