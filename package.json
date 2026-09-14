@@ -5,13 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
+
     "test:regression": "playwright test --grep @regression",
+    "test:smoke": "playwright test --grep @smoke",
     "test:api": "playwright test --grep @api",
     "test:clientBooking": "playwright test --grep @clientBooking",
     "test:clientOrder": "playwright test --grep @clientOrder",
     "test:errorValidation": "playwright test --grep @errorValidation",
+
+    "test:regression:chromium": "playwright test --grep @regression --project=chromium",
+    "test:regression:firefox": "playwright test --grep @regression --project=firefox",
+    "test:regression:webkit": "playwright test --grep @regression --project=webkit",
+
     "report": "playwright show-report"
   },
   "keywords": [

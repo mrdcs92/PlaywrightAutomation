@@ -7,7 +7,7 @@ import dataset from '../../test-data/placeOrderTestData.json';
 
 for (const data of dataset) {
 
-    test(`JSON Data: Place Order - ${data.productName}`, {tag:['@clientOrder', '@regression']}, async ({ page }) => {
+    test(`JSON Data: Place Order - ${data.productName}`, {tag:['@clientOrder', '@regression', '@smoke']}, async ({ page }) => {
 
         const poManager = new POManager(page);
 

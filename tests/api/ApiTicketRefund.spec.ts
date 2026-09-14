@@ -17,7 +17,7 @@ for (const data of bookingTestData) {
             expect(bookingRes.status()).toBe(200);
         });
 
-        test(`API Successful Refund Test`, async ({ page, request }) => {
+        test(`API Successful Refund Test`, {tag:['@smoke']}, async ({ page, request }) => {
             const apiManager = new APIManager(request);
             const loginClient = apiManager.getLoginClient();
             const token = await loginClient.getAuthToken(data.username, data.password);

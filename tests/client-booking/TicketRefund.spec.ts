@@ -14,7 +14,7 @@ for (const data of placeOrderTestData) {
             expect(await apiUtils.clearBookings()).toBeTruthy();      
         });
 
-        test(`Ticket Refund Test`, async ({ page }) => {
+        test(`Ticket Refund Test`, {tag:['@smoke']}, async ({ page }) => {
 
             const poManager = new POManager(page);
 
