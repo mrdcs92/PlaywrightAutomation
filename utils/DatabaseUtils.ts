@@ -1,7 +1,7 @@
 import mysql, { Pool, RowDataPacket, ExecuteValues } from 'mysql2/promise';
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 export class DatabaseUtils {
 

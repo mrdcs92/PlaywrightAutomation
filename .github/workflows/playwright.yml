@@ -49,6 +49,9 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
+    - name: Clean Allure Results
+      run: npm run allure:clean
+
       # Push/Pull Request
     - name: Run Regression Tests
       if: github.event_name != 'workflow_dispatch'
@@ -58,6 +61,10 @@ jobs:
     - name: Run Selected Suite
       if: github.event_name == 'workflow_dispatch'
       run: npm run test:${{ inputs.suite }} -- --project=${{ inputs.browser }}
+
+    - name: Generate Allure Report
+      if: ${{ !cancelled() }}
+      run: npm run allure:generate
       
     - name: Upload Playwright Report
       uses: actions/upload-artifact@v4
@@ -65,4 +72,12 @@ jobs:
       with:
         name: playwright-report-${{ inputs.suite }}-${{ inputs.browser }}
         path: playwright-report/
+        retention-days: 30
+
+    - name: Upload Allure Report
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: allure-report
+        path: allure-report/
         retention-days: 30
