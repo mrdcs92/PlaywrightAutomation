@@ -173,9 +173,7 @@ expect(await loginPage.browseEventsIsDisplayed()).toBeTruthy();
 
 <p>The project contains separate Page Object Managers for different web applications represented by the test framework.</p>
 
-<p>The project contains separate Page Object Managers for different web applications represented by the test framework.
-
-Each manager is responsible only for the pages belonging to its application.</p>
+<p>Each manager is responsible only for the pages belonging to its application.</p>
 
 ```text
                    Custom Fixture
