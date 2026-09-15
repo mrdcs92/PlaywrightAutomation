@@ -1,5 +1,6 @@
-import { test, expect } from '@playwright/test';
-import { APIManager } from "../../api/APIManager";
+//import { test, expect } from '@playwright/test';
+//import { APIManager } from "../../api/APIManager";
+import { test, expect } from "../../fixtures/TestFixtures";
 import { bookingTestData } from "../../test-data/bookingTestData";
 import { DatabaseUtils } from '../../utils/DatabaseUtils';
 import { RowDataPacket } from 'mysql2/promise';
@@ -16,9 +17,7 @@ for (const testData of bookingTestData) {
 
     test.describe(`SQL Record Event Validation - ${testData.customerName}`, { tag: ['@database'] }, () => {
 
-        test(`Validate SQL Records`, async ({ request }) => {
-
-            const apiManager = new APIManager(request);
+        test(`Validate SQL Records`, async ({ apiManager }) => {
             const loginClient = apiManager.getLoginClient();
             const token = await loginClient.getAuthToken(testData.username, testData.password);
 

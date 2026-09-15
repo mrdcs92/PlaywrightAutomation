@@ -1,27 +1,22 @@
-import { test, expect, Locator, Page } from "@playwright/test";
-import { POManager } from "../../pageObjects/client-orders/POManager";
+//import { test, expect, Locator, Page } from "@playwright/test";
+//import { POManager } from "../../pageObjects/client-orders/POManager";
+import { test, expect } from "../../fixtures/TestFixtures";
 import { placeOrderTestData } from '../../test-data/placeOrderTestData'
 
 import dataset from '../../test-data/placeOrderTestData.json';
 
 for (const data of dataset) {
 
-    test(`JSON Data: Password Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ page }) => {
-
-        const poManager = new POManager(page);
-
-        const loginPage = poManager.getLoginPage();
+    test(`JSON Data: Password Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ ordersPOManager }) => {
+        const loginPage = ordersPOManager.getLoginPage();
         await loginPage.goTo();
         await loginPage.validLogin(data.username, "banana");
         const errorMessage = await loginPage.getErrorMessage();
         expect(errorMessage).toEqual("Incorrect email or password.");
     });
 
-    test(`JSON Data: Username Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ page }) => {
-
-        const poManager = new POManager(page);
-
-        const loginPage = poManager.getLoginPage();
+    test(`JSON Data: Username Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ ordersPOManager }) => {
+        const loginPage = ordersPOManager.getLoginPage();
         await loginPage.goTo();
         await loginPage.validLogin((data.username + ".com"), data.password);
         const errorMessage = await loginPage.getErrorMessage();
@@ -32,22 +27,16 @@ for (const data of dataset) {
 
 for (const data of placeOrderTestData) {
 
-    test(`TS Data: Password Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ page }) => {
-
-        const poManager = new POManager(page);
-
-        const loginPage = poManager.getLoginPage();
+    test(`TS Data: Password Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ ordersPOManager }) => {
+        const loginPage = ordersPOManager.getLoginPage();
         await loginPage.goTo();
         await loginPage.validLogin(data.username, "banana");
         const errorMessage = await loginPage.getErrorMessage();
         expect(errorMessage).toEqual("Incorrect email or password.");
     });
 
-    test(`TS Data: Username Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ page }) => {
-
-        const poManager = new POManager(page);
-
-        const loginPage = poManager.getLoginPage();
+    test(`TS Data: Username Login Error Validation - ${data.username}`, {tag:['@clientOrder', '@errorValidation']}, async ({ ordersPOManager }) => {
+        const loginPage = ordersPOManager.getLoginPage();
         await loginPage.goTo();
         await loginPage.validLogin((data.username + ".com"), data.password);
         const errorMessage = await loginPage.getErrorMessage();

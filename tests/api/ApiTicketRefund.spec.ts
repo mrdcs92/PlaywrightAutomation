@@ -1,15 +1,15 @@
-import { test, expect, request } from '@playwright/test';
-import { APIManager } from "../../api/APIManager";
-import { POManager } from '../../pageObjects/client-booking/POManager';
+//import { test, expect, request } from '@playwright/test';
+//import { APIManager } from "../../api/APIManager";
+//import { POManager } from '../../pageObjects/client-booking/POManager';
 import { bookingTestData } from "../../test-data/bookingTestData";
+import { test, expect } from "../../fixtures/TestFixtures";
 
 for (const data of bookingTestData) {
 
     test.describe(`API Ticket Refund Test - ${data.customerName}`, {tag:['@api', '@regression']}, () => {
 
-        test.beforeEach(async ({ }) => {
-            const apiContext = await request.newContext();
-            const apiManager = new APIManager(apiContext);
+        test.beforeEach(async ({ apiManager }) => {
+
             const loginClient = apiManager.getLoginClient();
             const authToken = await loginClient.getAuthToken(data.username, data.password);
             const bookingClient = apiManager.getBookingClient();
@@ -17,8 +17,8 @@ for (const data of bookingTestData) {
             expect(bookingRes.status()).toBe(200);
         });
 
-        test(`API Successful Refund Test`, {tag:['@smoke']}, async ({ page, request }) => {
-            const apiManager = new APIManager(request);
+        test(`API Successful Refund Test`, {tag:['@smoke']}, async ({ apiManager, bookingPOManager }) => {
+           
             const loginClient = apiManager.getLoginClient();
             const token = await loginClient.getAuthToken(data.username, data.password);
 
@@ -29,19 +29,18 @@ for (const data of bookingTestData) {
             const bookingJson = await bookingRes.json();
             const bookingRef = bookingJson.data.bookingRef;
 
-            const poManager = new POManager(page);
-            const loginPage = poManager.getLoginPage();
+            const loginPage = bookingPOManager.getLoginPage();
             await loginPage.goTo();
             await loginPage.validLogin(data.username, data.password);
             expect(await loginPage.browseEventsIsDisplayed()).toBeTruthy();
 
-            const homePage = poManager.getHomePage();
+            const homePage = bookingPOManager.getHomePage();
             await homePage.goToMyBookings();
 
-            const bookingPage = poManager.getMyBookingsPage();
+            const bookingPage = bookingPOManager.getMyBookingsPage();
             await bookingPage.viewEventDetails(bookingRef);
 
-            const eventDetailPage = poManager.getEventDetailPage();
+            const eventDetailPage = bookingPOManager.getEventDetailPage();
             await expect(eventDetailPage.getBookingInfoText()).toBeVisible();
 
             expect(await eventDetailPage.getBookingIdLetter()).toBe(await eventDetailPage.getEventNameLetter());
@@ -55,8 +54,8 @@ for (const data of bookingTestData) {
 
         })
 
-        test('API Not Eligible for Refund Test', async ({ page, request }) => {
-            const apiManager = new APIManager(request);
+        test('API Not Eligible for Refund Test', async ({ apiManager, bookingPOManager }) => {
+            
             const loginClient = apiManager.getLoginClient();
             const token = await loginClient.getAuthToken(data.username, data.password);
 
@@ -67,19 +66,18 @@ for (const data of bookingTestData) {
             const bookingJson = await bookingRes.json();
             const bookingRef = bookingJson.data.bookingRef;
 
-            const poManager = new POManager(page);
-            const loginPage = poManager.getLoginPage();
+            const loginPage = bookingPOManager.getLoginPage();
             await loginPage.goTo();
             await loginPage.validLogin(data.username, data.password);
             expect(await loginPage.browseEventsIsDisplayed()).toBeTruthy();
 
-            const homePage = poManager.getHomePage();
+            const homePage = bookingPOManager.getHomePage();
             await homePage.goToMyBookings();
 
-            const bookingPage = poManager.getMyBookingsPage();
+            const bookingPage = bookingPOManager.getMyBookingsPage();
             await bookingPage.viewEventDetails(bookingRef);
 
-            const eventDetailPage = poManager.getEventDetailPage();
+            const eventDetailPage = bookingPOManager.getEventDetailPage();
             await expect(eventDetailPage.getBookingInfoText()).toBeVisible();
 
             expect(await eventDetailPage.getBookingIdLetter()).toBe(await eventDetailPage.getEventNameLetter());

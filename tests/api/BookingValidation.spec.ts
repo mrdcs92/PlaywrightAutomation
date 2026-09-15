@@ -1,14 +1,13 @@
-import { test, expect, request } from '@playwright/test';
-import { APIManager } from "../../api/APIManager";
+//import { test, expect, request } from '@playwright/test';
+//import { APIManager } from "../../api/APIManager";
+import { test, expect } from "../../fixtures/TestFixtures";
 import { bookingTestData } from "../../test-data/bookingTestData";
 
 for (const data of bookingTestData) {
 
     test.describe(`Booking Creation Tests - ${data.customerName}`, {tag:['@api', '@regression']}, () => {
 
-        test.beforeAll(async ({ }) => {
-            const apiContext = await request.newContext();
-            const apiManager = new APIManager(apiContext);
+        test.beforeAll(async ({ apiManager }) => {
             const loginClient = apiManager.getLoginClient();
             const authToken = await loginClient.getAuthToken(data.username, data.password);
 
@@ -17,8 +16,7 @@ for (const data of bookingTestData) {
             expect(bookingRes.status()).toBe(200);
         });
 
-        test('Successful Booking Test', async ({ request }) => {
-            const apiManager = new APIManager(request);
+        test('Successful Booking Test', async ({ apiManager }) => {
             const loginClient = apiManager.getLoginClient();
             const token = await loginClient.getAuthToken(data.username, data.password);
 
@@ -30,8 +28,7 @@ for (const data of bookingTestData) {
             expect(bookBody.message).toBe("Booking confirmed!");
         })
 
-        test('Invalid Booking Test', {tag:['@errorValidation']}, async ({ request }) => {
-            const apiManager = new APIManager(request);
+        test('Invalid Booking Test', {tag:['@errorValidation']}, async ({ apiManager }) => {
             const loginClient = apiManager.getLoginClient();
             const token = await loginClient.getAuthToken(data.username, data.password);
 

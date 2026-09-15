@@ -1,13 +1,13 @@
-import { test, expect, request } from '@playwright/test';
-import { APIManager } from "../../api/APIManager";
+//import { test, expect, request } from '@playwright/test';
+//import { APIManager } from "../../api/APIManager";
+import { test, expect } from "../../fixtures/TestFixtures";
 import { eventTestData } from "../../test-data/eventTestData";
 
 for (const data of eventTestData) {
 
     test.describe(`Event Creation Tests - ${data.title}`, {tag:['@api', '@regression']}, () => {
 
-        test(`Successful Event Setup/Teardown`, async ({ request }) => {
-            const apiManager = new APIManager(request);
+        test(`Successful Event Setup/Teardown`, async ({ apiManager }) => {
             const loginClient = apiManager.getLoginClient();
             const token = await loginClient.getAuthToken(data.username, data.password);
 
@@ -29,8 +29,7 @@ for (const data of eventTestData) {
             expect(delBody.message).toBe("Event deleted successfully");
         })
 
-        test('Event Validation Error', {tag:['@errorValidation']}, async ({ request }) => {
-            const apiManager = new APIManager(request);
+        test('Event Validation Error', {tag:['@errorValidation']}, async ({ apiManager }) => {
             const eventClient = apiManager.getEventClient();
 
             const eventResponse = await eventClient.createEvent(data.title, data.description, data.category, data.venue, data.city, data.eventDate, data.price, data.totalSeats, "blah");

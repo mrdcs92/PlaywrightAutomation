@@ -1,23 +1,20 @@
-import { test, expect, request } from '@playwright/test';
-import { APIManager } from "../../api/APIManager";
+//import { test, expect, request } from '@playwright/test';
+//import { APIManager } from "../../api/APIManager";
+import { test, expect } from "../../fixtures/TestFixtures";
 import { placeOrderTestData } from '../../test-data/placeOrderTestData';
 
 for (const data of placeOrderTestData) {
 
-    test.describe(`Login Validation Tests - ${data.username}`, {tag:['@api', '@regression']}, () => {
+    test.describe(`Login Validation Tests - ${data.username}`, { tag: ['@api', '@regression'] }, () => {
 
-        test('Positive Login Test', async ({ request }) => {
-            const apiManager = new APIManager(request);
-
+        test('Positive Login Test', async ({ apiManager }) => {
             const loginClient = apiManager.getLoginClient();
             const loginResponse = await loginClient.login(data.username, data.password);
 
             expect(loginResponse.status()).toBe(200);
         })
 
-        test('Invalid Credentials Test', {tag:['@errorValidation']}, async ({ request }) => {
-            const apiManager = new APIManager(request);
-
+        test('Invalid Credentials Test', { tag: ['@errorValidation'] }, async ({ apiManager }) => {
             const loginClient = apiManager.getLoginClient();
             const loginResponse = await loginClient.login(data.username, "banana");
 
@@ -31,9 +28,7 @@ for (const data of placeOrderTestData) {
 
 }
 
-test('Empty Credentials Test', {tag:['@errorValidation']}, async ({ request }) => {
-    const apiManager = new APIManager(request);
-
+test('Empty Credentials Test', { tag: ['@errorValidation'] }, async ({ apiManager }) => {
     const loginClient = apiManager.getLoginClient();
     const loginResponse = await loginClient.login("", "");
 
@@ -43,5 +38,4 @@ test('Empty Credentials Test', {tag:['@errorValidation']}, async ({ request }) =
     expect(resBody.error).toBe("Validation failed");
     expect(resBody.details[0].message).toBe("A valid email is required");
     expect(resBody.details[1].message).toBe("Password must be at least 6 characters");
-
 })
