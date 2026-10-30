@@ -2,7 +2,7 @@
   <ul style="list-style: none">
     <summary>
       <h1>Playwright Automation Framework</h1>
-      <h2 margin-top: 0px>TypeScript • Playwright • Github Actions • MySQL • Allure Reports • MySQL</h2>
+      <h2 margin-top: 0px>TypeScript • Playwright • Github Actions • MySQL • Allure Reports</h2>
     </summary>
   </ul>
 </div>
