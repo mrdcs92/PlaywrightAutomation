@@ -646,8 +646,6 @@ allure-results/
 <p>The raw results are converted into a generated report:</p>
 
 ```text
-The raw results are converted into a generated report:
-
 allure-results/
        │
        ▼
